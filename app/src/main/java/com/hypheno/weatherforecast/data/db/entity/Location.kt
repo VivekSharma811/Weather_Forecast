@@ -1,4 +1,4 @@
-package com.hypheno.weatherforecast.data
+package com.hypheno.weatherforecast.data.db.entity
 
 data class Location(
     val country: String,
