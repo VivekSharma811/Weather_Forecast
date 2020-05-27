@@ -8,6 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.hypheno.weatherforecast.R
+import com.hypheno.weatherforecast.data.WeatherApiService
+import kotlinx.android.synthetic.main.current_weather_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CurrentWeatherFragment : Fragment() {
 
@@ -29,6 +34,15 @@ class CurrentWeatherFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(CurrentWeatherViewModel::class.java)
         // TODO: Use the ViewModel
+
+        val weatherApiService = WeatherApiService()
+        GlobalScope.launch(Dispatchers.Main) {
+            val currentWeatherResponse = weatherApiService.getCurrentWeather("London").await()
+
+            currentWeatherResponse.current?.let {
+                textView.text = it.toString()
+            }
+        }
     }
 
 }
