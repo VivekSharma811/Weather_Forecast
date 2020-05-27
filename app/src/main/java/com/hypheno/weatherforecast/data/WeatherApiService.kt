@@ -20,7 +20,7 @@ interface WeatherApiService {
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("acces_key" , API_KEY)
+                    .addQueryParameter("access_key" , API_KEY)
                     .build()
 
                 val request = chain.request()
