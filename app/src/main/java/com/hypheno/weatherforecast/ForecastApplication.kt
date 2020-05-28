@@ -1,9 +1,13 @@
 package com.hypheno.weatherforecast
 
 import android.app.Application
+import android.content.Context
 import androidx.preference.PreferenceManager
+import com.google.android.gms.location.LocationServices
 import com.hypheno.weatherforecast.data.db.ForecastDatabase
 import com.hypheno.weatherforecast.data.network.*
+import com.hypheno.weatherforecast.data.provider.LocationProvider
+import com.hypheno.weatherforecast.data.provider.LocationProviderImpl
 import com.hypheno.weatherforecast.data.provider.UnitProvider
 import com.hypheno.weatherforecast.data.provider.UnitProviderImpl
 import com.hypheno.weatherforecast.data.repository.ForecastRepository
@@ -25,10 +29,13 @@ class ForecastApplication : Application(), KodeinAware {
 
         bind() from singleton { ForecastDatabase(instance()) }
         bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
+        bind() from singleton { instance<ForecastDatabase>().weatherLocationDao() }
         bind<ConnectivityInterceptor>()with singleton { ConnectivityInterceptorImpl(instance()) }
         bind() from singleton { WeatherApiService(instance()) }
         bind<WeatherNetworkDatasource>() with singleton { WeatherNetworkDatasourceImpl(instance()) }
-        bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance()) }
+        bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
+        bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
+        bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance(), instance(), instance()) }
         bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
         bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
     }
