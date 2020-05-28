@@ -1,8 +1,11 @@
 package com.hypheno.weatherforecast
 
 import android.app.Application
+import androidx.preference.PreferenceManager
 import com.hypheno.weatherforecast.data.db.ForecastDatabase
 import com.hypheno.weatherforecast.data.network.*
+import com.hypheno.weatherforecast.data.provider.UnitProvider
+import com.hypheno.weatherforecast.data.provider.UnitProviderImpl
 import com.hypheno.weatherforecast.data.repository.ForecastRepository
 import com.hypheno.weatherforecast.data.repository.ForecastRepositoryImpl
 import com.hypheno.weatherforecast.ui.weather.current.CurrentWeatherViewModelFactory
@@ -26,12 +29,14 @@ class ForecastApplication : Application(), KodeinAware {
         bind() from singleton { WeatherApiService(instance()) }
         bind<WeatherNetworkDatasource>() with singleton { WeatherNetworkDatasourceImpl(instance()) }
         bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance()) }
-        bind() from provider { CurrentWeatherViewModelFactory(instance()) }
+        bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
+        bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
     }
 
     override fun onCreate() {
         super.onCreate()
         AndroidThreeTen.init(this)
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
     }
 
 }
