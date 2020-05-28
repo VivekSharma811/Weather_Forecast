@@ -43,7 +43,7 @@ class ForecastRepositoryImpl(
     }
 
     private suspend fun fetchCurrentWeather() {
-        weatherNetworkDatasource.fetchCurrentWeather("London", Locale.getDefault().language)
+        weatherNetworkDatasource.fetchCurrentWeather("Delhi", Locale.getDefault().language)
     }
 
     private fun isFetchCurrentNeeded(lastFetchTime : ZonedDateTime) : Boolean {

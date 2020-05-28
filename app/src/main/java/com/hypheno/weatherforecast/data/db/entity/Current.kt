@@ -16,9 +16,9 @@ data class Current(
     val uv_index: Int,
     val visibility: Int,
     val weather_code: Int,
-//    @TypeConverters(WeatherDescriptions::class)
+//    @TypeConverters(WeatherDesc::class)
 //    val weather_descriptions: List<String>,
-//    @TypeConverters(WeatherIcons::class)
+//    @TypeConverters(WeatherDesc::class)
 //    val weather_icons: List<String>,
     val wind_dir: String,
     val wind_speed: Double
