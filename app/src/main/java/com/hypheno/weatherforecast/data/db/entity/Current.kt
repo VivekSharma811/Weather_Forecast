@@ -2,6 +2,7 @@ package com.hypheno.weatherforecast.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 
 const val CURRENT_WEATHER_ID = 0
 
@@ -15,8 +16,10 @@ data class Current(
     val uv_index: Int,
     val visibility: Int,
     val weather_code: Int,
-    val weather_descriptions: List<String>,
-    val weather_icons: List<String>,
+//    @TypeConverters(WeatherDescriptions::class)
+//    val weather_descriptions: List<String>,
+//    @TypeConverters(WeatherIcons::class)
+//    val weather_icons: List<String>,
     val wind_dir: String,
     val wind_speed: Double
 ) {

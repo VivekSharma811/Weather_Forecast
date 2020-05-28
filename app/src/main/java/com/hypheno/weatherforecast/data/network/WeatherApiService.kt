@@ -1,4 +1,4 @@
-package com.hypheno.weatherforecast.data
+package com.hypheno.weatherforecast.data.network
 
 import com.hypheno.weatherforecast.data.network.response.CurrentWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -15,13 +15,17 @@ const val API_KEY = "aaae861edb521abe41ccf9299a89d159"
 interface WeatherApiService {
 
     companion object {
-        operator fun invoke() : WeatherApiService {
+        operator fun invoke(
+            connectivityInterceptor: ConnectivityInterceptor
+        ) : WeatherApiService {
             val requestInterceptor = Interceptor {chain ->
 
                 val url = chain.request()
                     .url()
                     .newBuilder()
-                    .addQueryParameter("access_key" , API_KEY)
+                    .addQueryParameter("access_key" ,
+                        API_KEY
+                    )
                     .build()
 
                 val request = chain.request()
@@ -34,6 +38,7 @@ interface WeatherApiService {
 
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
+                .addInterceptor(connectivityInterceptor)
                 .build()
 
             return Retrofit.Builder()
