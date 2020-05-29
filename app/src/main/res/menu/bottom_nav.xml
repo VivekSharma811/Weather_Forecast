@@ -7,11 +7,6 @@
         android:title="Today"/>
 
     <item
-        android:id="@+id/futureListWeatherFragment"
-        android:icon="@drawable/ic_calendar"
-        android:title="7 Days"/>
-
-    <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:title="Settings"/>

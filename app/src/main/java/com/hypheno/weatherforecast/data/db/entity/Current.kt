@@ -11,7 +11,7 @@ data class Current(
     val feelslike: Int,
     val is_day: String,
     val observation_time: String,
-    val precip: Int,
+    val precip: Double,
     val temperature: Double,
     val uv_index: Int,
     val visibility: Int,
